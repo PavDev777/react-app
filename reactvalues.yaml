@@ -1,0 +1,61 @@
+---
+# Source: reactapp/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactapp-reactapp
+  namespace: reactapp
+spec:
+  type: ClusterIP
+  selector:
+    app: reactapp
+  ports:
+    - port: 80
+      targetPort: 80
+---
+# Source: reactapp/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reactapp-reactapp
+  namespace: reactapp
+  labels:
+    app: reactapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactapp
+  template:
+    metadata:
+      labels:
+        app: reactapp
+    spec:
+      containers:
+        - name: reactapp
+          image: "pavdev777/reactapp:latest"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+---
+# Source: reactapp/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: reactapp-reactapp
+  namespace: reactapp
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: reactapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: reactapp-reactapp
+                port:
+                  number: 80

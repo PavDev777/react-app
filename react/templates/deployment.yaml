@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "reactapp.fullname" . }}
+  namespace: reactapp
+  labels:
+    app: {{ include "reactapp.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "reactapp.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "reactapp.name" . }}
+    spec:
+      containers:
+        - name: reactapp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
