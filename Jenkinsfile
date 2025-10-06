@@ -81,8 +81,5 @@ pipeline {
         failure {
             echo "❌ Build, tests, or deployment failed."
         }
-        always {
-            junit '**/junit.xml' // (если тесты генерируют отчёт)
-        }
     }
 }
