@@ -53,7 +53,7 @@ pipeline {
                     // Используем kubeconfig из Jenkins credentials
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                         sh '''
-                        helm upgrade --install ${APP_NAME} ./reactapp/react \
+                        helm upgrade --install ${APP_NAME} ./react \
                             --namespace ${NAMESPACE} \
                             --create-namespace \
                             --set image.repository=pavdev777/reactapp \
