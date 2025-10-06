@@ -57,7 +57,6 @@ pipeline {
                 }
             }
         }
-/*
 
         stage('Deploy to Kubernetes via Helm') {
             steps {
@@ -73,17 +72,6 @@ pipeline {
                 }
             }
         }
-*/
-
-    stage('Deploy with Ansible') {
-      steps {
-        sh '''
-          ansible-playbook -i ansible/inventory ansible/deploy.yaml \
-            --extra-vars "image_tag="latest" image_name=$IMAGE_NAME"
-        '''
-      }
-    }
-    }
 
     post {
         success {
