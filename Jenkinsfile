@@ -72,7 +72,7 @@ pipeline {
                 }
             }
         }
-
+    }
     post {
         success {
             echo "✅ Tests passed and deployment completed successfully!"
@@ -81,5 +81,4 @@ pipeline {
             echo "❌ Build, tests, or deployment failed."
         }
     }
-}
 }
